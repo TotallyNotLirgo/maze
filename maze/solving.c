@@ -30,8 +30,7 @@ double solve_maze(Connections cons,
     head->x = start_x;
     head->y = 0;
     head->weight = weights[node_to_id(head, maze_size)];
-    uint128 visited_mask = 0b0;
-    double lowest_weight = head->weight;
+    uint128 visited_mask = 0;
 
     while (head->x != end_x || head->y != maze_size - 1) {
         Node* node_arr[4] = {NULL, NULL, NULL, NULL};
@@ -49,7 +48,7 @@ double solve_maze(Connections cons,
             Node* node = malloc(sizeof(Node));
             node->x = x_arr[i];
             node->y = y_arr[i];
-            uint128 pos_mask = (uint128) 0b1 << node_to_id(node, maze_size);
+            uint128 pos_mask = (uint128) 1 << node_to_id(node, maze_size);
             if (visited_mask & pos_mask) continue;
             node->parent = head;
             node->weight = head->weight + weights[node_to_id(node, maze_size)];

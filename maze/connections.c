@@ -16,7 +16,7 @@ void connect(int wall, int is_h, UInt128Array* con_areas, int maze_size)
     int b;
     int index_a = -1;
     int index_b = -1;
-    int j = 0;
+    int offset = 0;
     if (is_h) {
         int section_size = maze_size - 1;
         int offset = wall % (maze_size - 1);
@@ -27,16 +27,16 @@ void connect(int wall, int is_h, UInt128Array* con_areas, int maze_size)
         b = wall + maze_size;
     }
     for (int i = 0; i < con_areas->len; i++) {
-        if ((uint128) 0b1 << a & con_areas->array[i]) 
+        if ((uint128) 1 << a & con_areas->array[i]) 
             index_a = i;
-        else if ((uint128) 0b1 << b & con_areas->array[i])
+        else if ((uint128) 1 << b & con_areas->array[i])
             index_b = i;
     }
     if (index_a != -1 && index_b != -1) {
         con_areas->array[index_a] |= con_areas->array[index_b];
         for (int i = 0; i < con_areas->len; i++) {
-            con_areas->array[j] = con_areas->array[i];
-            if (i != index_b) j++;
+            con_areas->array[i - offset] = con_areas->array[i];
+            if (i == index_b) offset = 1;
         }
         con_areas->len -= 1;
     }

@@ -14,7 +14,7 @@ void print_maze(Connections cons,
     for (int i = 0; i <= maze_size; i++) {
         for (int j = 0; j <= maze_size; j++) {
             character = i == 0 || i == maze_size ? WALL_CHARACTER : " ";
-            if (i == 0 && j == start_x || i == maze_size && j == end_x)
+            if ((i == 0 && j == start_x) || (i == maze_size && j == end_x))
                 character = "|";
             else if (i != 0 && i != maze_size && j != maze_size) {
                 character = cons.v[vi] ? " " : WALL_CHARACTER;

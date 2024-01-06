@@ -25,7 +25,7 @@ void generate_maze(int maze_size, Connections* cons) {
         }
     }
     for (int i = 0; i < con_areas.len; i++)
-        con_areas.array[i] = (uint128) 0b1 << i;
+        con_areas.array[i] = (uint128) 1 << i;
 
     while (con_areas.len > 1) {
         int next_wall = ((double) rand() / RAND_MAX) * (cons->len * 2);

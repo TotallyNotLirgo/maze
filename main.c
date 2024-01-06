@@ -10,12 +10,12 @@
 
 int main(int argc, char** argv)
 {
-    if(argc != 2) {
+    if (argc != 2) {
         fprintf(stderr, "Incorrect number of arguments.\n");
         fprintf(stderr, "For more info: %s --help\n", argv[0]);
         return 1;
     }
-    if(!strcmp(argv[1], "--help")) {
+    if (!strcmp(argv[1], "--help")) {
         printf("Generates and solves a maze\n");
         printf("Usage:\n");
         printf("    %s SIZE\n", argv[0]);
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         .v = calloc(size, sizeof(int))
     };
     double* weights = malloc(sizeof(double*) * maze_size * maze_size);
-    for(int i = 0; i < maze_size * maze_size; i++){
+    for (int i = 0; i < maze_size * maze_size; i++) {
         weights[i] = (double) rand() / RAND_MAX;
     }
     int start_x = (double) rand() / RAND_MAX * maze_size;

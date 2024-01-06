@@ -1,7 +1,7 @@
 #ifndef SOLVING_H
 #define SOLVING_H
 
-#include  "datatypes.h"
+#include "datatypes.h"
 #include <stdlib.h>
 #include <float.h>
 

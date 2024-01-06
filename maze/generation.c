@@ -1,6 +1,6 @@
 #include "generation.h"
 
-void generate_maze(int maze_size, Connections* cons){
+void generate_maze(int maze_size, Connections* cons) {
     int size = maze_size * maze_size;
     UInt128Array con_areas = {
         .array = malloc(size * sizeof(uint128)),
@@ -12,9 +12,8 @@ void generate_maze(int maze_size, Connections* cons){
         .v = malloc(size * sizeof(int)),
         .h = malloc(size * sizeof(int))
     };
-    int i, j;
-    j = 0;
-    for (i = 0; i < cons->len; i++) {
+    int j = 0;
+    for (int i = 0; i < cons->len; i++) {
         if ((i + 1) % maze_size != 0) {
             forb_cons.v[j] = i;
             forb_cons.v[j + 1] = i + 1;
@@ -25,7 +24,7 @@ void generate_maze(int maze_size, Connections* cons){
             forb_cons.h[2 * i + 1] = i + maze_size - 1;
         }
     }
-    for (i = 0; i < con_areas.len; i++)
+    for (int i = 0; i < con_areas.len; i++)
         con_areas.array[i] = (uint128) 0b1 << i;
 
     while (con_areas.len > 1) {

@@ -1,7 +1,6 @@
 #include "connections.h"
 
-int is_connection_forbidden(Connections cons, Connections forb_cons)
-{
+int is_connection_forbidden(Connections cons, Connections forb_cons) {
     for (int i = 0; i < forb_cons.len; i += 2) {
         if (cons.h[forb_cons.h[i]] == 1 && cons.h[forb_cons.h[i + 1]] == 1 &&
             cons.v[forb_cons.v[i]] == 1 && cons.v[forb_cons.v[i + 1]] == 1)
@@ -10,8 +9,7 @@ int is_connection_forbidden(Connections cons, Connections forb_cons)
     return 0;
 }
 
-void connect(int wall, int is_h, UInt128Array* con_areas, int maze_size)
-{
+void connect(int wall, int is_h, UInt128Array* con_areas, int maze_size) {
     int a;
     int b;
     int index_a = -1;

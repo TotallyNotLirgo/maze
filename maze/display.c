@@ -1,41 +1,35 @@
 #include "display.h"
 
-void print_maze(Connections cons,
-                int maze_size,
-                Connections final_cons,
-                double* weights,
-                int start_x,
-                int end_x,
-                double len) {
+void print_maze(Maze maze) {
     int vi = 0;
     int hi = 0;
     char* character;
-    printf("Shortest path length: %f\n", len);
-    for (int i = 0; i <= maze_size; i++) {
-        for (int j = 0; j <= maze_size; j++) {
-            character = i == 0 || i == maze_size ? WALL_CHARACTER : " ";
-            if ((i == 0 && j == start_x) || (i == maze_size && j == end_x))
-                character = "|";
-            else if (i != 0 && i != maze_size && j != maze_size) {
-                character = cons.v[vi] ? " " : WALL_CHARACTER;
-                character = final_cons.v[vi] ? "|" : character;
+    printf("Lightest path weight: %f\n", maze.path_weight);
+    for (int i = 0; i <= maze.size; i++) {
+        for (int j = 0; j <= maze.size; j++) {
+            character = i == 0 || i == maze.size ? WALL_CHARACTER : " ";
+            character = i == 0 && j == maze.start_x ? "|" : character;
+            character = i == maze.size && j == maze.end_x ? "|" : character;
+            if (i != 0 && i != maze.size && j != maze.size) {
+                character = maze.cons.v[vi] ? " " : WALL_CHARACTER;
+                character = maze.path.v[vi] ? "|" : character;
                 vi++;
             }
             printf("%s", WALL_CHARACTER);
-            if (j != maze_size) printf("%s", character);
+            if (j != maze.size) printf("%s", character);
         }
         printf("\n");
-        if (i == maze_size) return;
-        for (int j = 0; j <= maze_size; j++) {
-            character = j == 0 || j == maze_size ? WALL_CHARACTER : " ";
-            if (j != 0 && j != maze_size) {
-                character = cons.h[hi] ? " " : WALL_CHARACTER;
-                character = final_cons.h[hi] ? "-" : character;
+        if (i == maze.size) return;
+        for (int j = 0; j <= maze.size; j++) {
+            character = j == 0 || j == maze.size ? WALL_CHARACTER : " ";
+            if (j != 0 && j != maze.size) {
+                character = maze.cons.h[hi] ? " " : WALL_CHARACTER;
+                character = maze.path.h[hi] ? "-" : character;
                 hi++;
             }
             printf("%s", character);
-            if (j != maze_size)
-                printf("%d", (int) (10 * weights[i * maze_size + j]));
+            if (j != maze.size)
+                printf("%d", (int) maze.weights[i * maze.size + j]);
         }
         printf("\n");
     }

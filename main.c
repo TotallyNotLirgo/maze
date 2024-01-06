@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "maze/display.h"
 #include "maze/datatypes.h"
+#include "maze/display.h"
 #include "maze/generation.h"
 #include "maze/solving.h"
 
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     if (argc != 2) {
         fprintf(stderr, "Incorrect number of arguments.\n");
         fprintf(stderr, "For more info: %s --help\n", argv[0]);
@@ -23,30 +22,24 @@ int main(int argc, char** argv)
         return 0;
     }
     int maze_size = atoi(argv[1]);
-    srand(time(NULL));
     if (maze_size > 10 || maze_size < 4) {
         fprintf(stderr, "Maze size not in range [4, 10]\n");
         return 1;
     }
-    int size = maze_size * maze_size - maze_size;
-    Connections cons = {
-        .len = size,
-        .h = calloc(size, sizeof(int)),
-        .v = calloc(size, sizeof(int))
-    };
-    Connections final_cons = {
-        .len = size,
-        .h = calloc(size, sizeof(int)),
-        .v = calloc(size, sizeof(int))
-    };
-    double* weights = malloc(sizeof(double*) * maze_size * maze_size);
-    for (int i = 0; i < maze_size * maze_size; i++) {
-        weights[i] = (double) rand() / RAND_MAX;
-    }
-    int start_x = (double) rand() / RAND_MAX * maze_size;
-    int end_x = (double) rand() / RAND_MAX * maze_size;
-    double len;
-    generate_maze(maze_size, &cons);
-    len = solve_maze(cons, &final_cons, weights, maze_size, start_x, end_x);
-    print_maze(cons, maze_size, final_cons, weights, start_x, end_x, len);
+    Maze maze;
+    maze.size = maze_size;
+
+    maze.cons.len = maze.size * maze.size - maze.size;
+    maze.cons.h = calloc(maze.cons.len, sizeof(int));
+    maze.cons.v = calloc(maze.cons.len, sizeof(int));
+
+    maze.path.len = maze.size * maze.size - maze.size;
+    maze.path.h = calloc(maze.path.len, sizeof(int));
+    maze.path.v = calloc(maze.path.len, sizeof(int));
+
+    maze.weights = malloc(sizeof(double*) * maze.size * maze.size);
+    srand(time(NULL));
+    generate_maze(&maze);
+    solve_maze(&maze);
+    print_maze(maze);
 }
